@@ -1,0 +1,94 @@
+import 'package:flutter/material.dart';
+import 'package:t_store/common/widgets/appbar/appbar.dart';
+import 'package:t_store/common/widgets/appbar/tabbar.dart';
+import 'package:t_store/common/widgets/custom_shapes/containers/search_container.dart';
+import 'package:t_store/common/widgets/layouts/grid_layout.dart';
+import 'package:t_store/common/widgets/products_cart_brands/brands/brands_card.dart';
+import 'package:t_store/common/widgets/products_cart_brands/cart/cart_menu_icon.dart';
+import 'package:t_store/common/widgets/texts/section_heading.dart';
+import 'package:t_store/features/shop/screens/store/widgets/category_widget.dart';
+import 'package:t_store/utils/constants/colors.dart';
+import 'package:t_store/utils/constants/sizes.dart';
+import 'package:t_store/utils/helpers/helper_functions.dart';
+
+class StoreScreen extends StatelessWidget {
+  const StoreScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 5,
+      child: Scaffold(
+        appBar: TAppBar(
+          title: Text("Store", style: Theme.of(context).textTheme.headlineMedium,),
+          actions: [
+            TCartCounterIcon(onPressed: (){}, )
+          ],
+        ),
+        body: NestedScrollView(
+          headerSliverBuilder: (_, innerBoxIsScrolled){
+            return [
+              SliverAppBar(
+                pinned: true,
+                floating: true,
+                backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.black : TColors.white,
+                expandedHeight: 440,
+                automaticallyImplyLeading: false,
+      
+                flexibleSpace: Padding(
+                  padding: EdgeInsets.all(TSizes.defaultSpace),
+                  child: ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(height: TSizes.spaceBtwItems,),
+      
+                      // Search bar
+                      TSearchContainer(text: "Search in Store", showBorder: true, showBackground: false, padding: EdgeInsets.zero,),
+                      SizedBox(height: TSizes.spaceBtwSections,),
+      
+                      // Heading
+                      TSectionHeader(title: "Featured Brands", onPressed: (){},),
+                      SizedBox(height: TSizes.spaceBtwItems / 1.5,),
+      
+                     TGridLayout(
+                      mainAxisExtent: 80,
+                      itemCount: 4, 
+                      itemBuilder: (_, index) {
+                       return  TBrandCard(showBorder: true,);
+                     },)
+                    ],
+                  ),
+                ),
+      
+                // Tabs
+                bottom: const TTabBar(
+                  tabs: [
+                    Tab(child: Text("Sports"),),
+                    Tab(child: Text("Furniture"),),
+                    Tab(child: Text("Electronics"),),
+                    Tab(child: Text("Clothes"),),
+                    Tab(child: Text("Cosmetics"),)
+                  ]
+                  
+                ),
+      
+              )
+            ];
+          }, 
+          body: TabBarView(
+            children: [
+              TCategoryWidget(),
+              TCategoryWidget(),
+              TCategoryWidget(),
+              TCategoryWidget(),
+              TCategoryWidget(),
+              
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+

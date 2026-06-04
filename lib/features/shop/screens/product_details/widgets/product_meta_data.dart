@@ -1,0 +1,99 @@
+import 'package:flutter/material.dart';
+import 'package:t_store/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:t_store/common/widgets/images/circular_image.dart';
+import 'package:t_store/common/widgets/texts/brand_text_verify_icon.dart';
+import 'package:t_store/common/widgets/texts/product_price_text.dart';
+import 'package:t_store/common/widgets/texts/product_title_text.dart';
+import 'package:t_store/utils/constants/colors.dart';
+import 'package:t_store/utils/constants/enums.dart';
+import 'package:t_store/utils/constants/image_strings.dart';
+import 'package:t_store/utils/constants/sizes.dart';
+import 'package:t_store/utils/helpers/helper_functions.dart';
+
+class TProductMetaData extends StatelessWidget {
+  const TProductMetaData({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            // SaleTag
+            TRoundedContainer(
+              radius: TSizes.sm,
+              backGroundColor: TColors.secondary.withAlpha(230),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: TSizes.sm, vertical: TSizes.sm),
+              child: Text(
+                "25%",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .apply(color: TColors.black),
+              ),
+            ),
+            const SizedBox(
+              width: TSizes.spaceBtwItems,
+            ),
+
+            // price
+            Text(
+              '\$250',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall!
+                  .apply(decoration: TextDecoration.lineThrough),
+            ),
+            const SizedBox(
+              width: TSizes.spaceBtwItems,
+            ),
+            TProductPriceText(
+              priceText: '175',
+              isLarge: true,
+            ),
+          ],
+        ),
+
+        const SizedBox(
+          width: TSizes.spaceBtwItems / 1.5,
+        ),
+
+        // Title
+        const TProductTitleText(title: "Green Nike sports shirt"),
+         const SizedBox(
+          width: TSizes.spaceBtwItems / 1.5,
+        ),
+
+        // Stock status
+        Row(children: [
+          TProductTitleText(title: 'Status'),
+          const SizedBox(
+          width: TSizes.spaceBtwItems / 1.5,
+        ),
+          Text('In Stock', style: Theme.of(context).textTheme.titleMedium,)
+        ],),
+        const SizedBox(
+          width: TSizes.spaceBtwItems / 1.5,
+        ),
+
+        // brand
+        Row(
+          children: [
+            TCircularImage(
+              image: TImages.cosmeticsIcon,
+              width: 32,
+              height: 32,
+              overlayColor: darkMode ? TColors.white : TColors.black,
+              ),
+            const TBrandTextVerifyIcon(titleText: "Nike", brandTextSize: TextSizes.medium,),
+          ],
+        )
+      ],
+    );
+  }
+}
