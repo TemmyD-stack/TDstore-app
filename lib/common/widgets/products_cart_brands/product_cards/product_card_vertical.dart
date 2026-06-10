@@ -86,7 +86,7 @@ class TProductCardVertical extends StatelessWidget {
                     SizedBox(
                       height: TSizes.spaceBtwItems / 2,
                     ),
-                    TBrandTextVerifyIcon(titleText: 'Nike',),
+                    TBrandTextVerifyIcon(titleText: 'Nike'),
                   ],
                 )),
             Spacer(),

@@ -13,7 +13,7 @@ class TBrandTextVerifyIcon extends StatelessWidget {
     this.iconColor = TColors.primary,
     required this.titleText,
     this.textAlign = TextAlign.center,
-    this.brandTextSize = TextSizes.small
+    this.brandTextSize = TextSizes.small, 
     
   });
 
