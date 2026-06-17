@@ -46,7 +46,7 @@ class TProductImageSlider extends StatelessWidget {
                  height: 80,
                   child: ListView.separated(
                    separatorBuilder: (_, __) => const SizedBox(width: TSizes.spaceBtwItems,), 
-                   itemCount: 4,
+                   itemCount: 7,
                    scrollDirection: Axis.horizontal,
                    shrinkWrap: true,
                    itemBuilder: (_, index)=>  TRoundedImage(

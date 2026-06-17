@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:t_store/features/autentication/screens/login/login.dart';
 
 class OnboardingController extends GetxController {
@@ -22,6 +23,8 @@ class OnboardingController extends GetxController {
   // update current index and jump to next page
   void nextPage(){
     if(currentPageIndex.value == 2){
+      final storage = GetStorage();
+      storage.write("isFirstTime", false); 
       Get.offAll(() => const LoginScreen());
     }else{
       int page = currentPageIndex.value + 1;
