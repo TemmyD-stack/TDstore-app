@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:t_store/common/widgets/loaders/animation_loader.dart';
 import 'package:t_store/utils/constants/colors.dart';
 import 'package:t_store/utils/helpers/helper_functions.dart';
+import 'package:t_store/utils/loaders/animation_loader.dart';
 
 ///A utility class for managing a full-screen loading dialog
 class TFullScreenLoader {
@@ -36,8 +36,9 @@ static void openLoadingDialog(String text, String animation) {
     );
 }
 
-///stop the currently open loading dialog
-///The method doesn't return anuthing
+/// stop the currently open loading dialog
+/// The method doesn't return anuthing
+// ignore: strict_top_level_inference
 static stopLoading(){
   Navigator.of(Get.overlayContext!).pop(); //close the dialog using the navigator
 }
