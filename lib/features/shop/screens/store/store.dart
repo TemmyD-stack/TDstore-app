@@ -7,6 +7,7 @@ import 'package:t_store/common/widgets/layouts/grid_layout.dart';
 import 'package:t_store/common/widgets/products_cart_brands/brands/brands_card.dart';
 import 'package:t_store/common/widgets/products_cart_brands/cart/cart_menu_icon.dart';
 import 'package:t_store/common/widgets/texts/section_heading.dart';
+import 'package:t_store/features/shop/controllers/category_controllers.dart';
 import 'package:t_store/features/shop/screens/all_brands/all_brands.dart';
 import 'package:t_store/features/shop/screens/store/widgets/category_widget.dart';
 import 'package:t_store/utils/constants/colors.dart';
@@ -18,8 +19,10 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = CategoryControllers.instance.featuredCategory;
+
     return DefaultTabController(
-      length: 5,
+      length: categories.length,
       child: Scaffold(
         appBar: TAppBar(
           title: Text("Store", style: Theme.of(context).textTheme.headlineMedium,),
@@ -64,14 +67,9 @@ class StoreScreen extends StatelessWidget {
                 ),
       
                 // Tabs
-                bottom: const TTabBar(
-                  tabs: [
-                    Tab(child: Text("Sports"),),
-                    Tab(child: Text("Furniture"),),
-                    Tab(child: Text("Electronics"),),
-                    Tab(child: Text("Clothes"),),
-                    Tab(child: Text("Cosmetics"),)
-                  ]
+                bottom: TTabBar(
+                 tabs: categories.map((category) => 
+                 Tab(child: Text(category.name))).toList(),
                   
                 ),
       
@@ -79,14 +77,7 @@ class StoreScreen extends StatelessWidget {
             ];
           }, 
           body: TabBarView(
-            children: [
-              TCategoryWidget(),
-              TCategoryWidget(),
-              TCategoryWidget(),
-              TCategoryWidget(),
-              TCategoryWidget(),
-              
-            ],
+            children: categories.map((category) => TCategoryWidget(category: category)).toList(),
           ),
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:t_store/data/repositories.authentication/authentication_repository.dart';
 import 'package:t_store/data/repositories.authentication/user/user_repository.dart';
 
@@ -21,7 +22,7 @@ class UserController extends GetxController {
   final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
   final userRepository = Get.put(UserRepository());
-
+  final imageUploading = false.obs;
   final hidePassword = true.obs;
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
@@ -50,7 +51,12 @@ class UserController extends GetxController {
 
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
     try {
-      if (userCredentials != null) {
+      // refresh user record- first update Rx user and then check if user data is already stored. if note, store new data
+      await fetchUserRecord();
+
+      // if no record already stored
+      if(user.value.id.isEmpty){
+          if (userCredentials != null) {
         // Convert name to first and last name
         final nameParts =
             UserModel.nameParts(userCredentials.user!.displayName ?? '');
@@ -71,6 +77,8 @@ class UserController extends GetxController {
         //dave user data
         await userRepository.saveUserRecord(user);
       }
+      }
+    
     } catch (e) {
       TLoaders.warningSnackBar(
         title: 'Data not saved',
@@ -180,7 +188,28 @@ class UserController extends GetxController {
       );
     }
 
-      
+  }
+  // upload profile picture
+  Future<void> uploadUserProfilePicture() async {
+   try{
+     final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 70, maxWidth: 512, maxHeight: 512);
+    if(image != null){
+      imageUploading.value = true;  
+      final imageUrl = await userRepository.uploadImage('Users/Images/Profile', image);
 
+      // update user Image
+      Map<String, dynamic> json = {"ProfilePicture": imageUrl};
+      await userRepository.updateSingleField(json);
+
+      user.value.profilePicture = imageUrl;
+      user.refresh();
+      TLoaders.successSnackBar(title: 'Congratulations!', message: "Profile picture updated successfully");
+
+    }
+   } catch (e) {
+    TLoaders.errorSnackBar(title: 'Oh Snap!', message: "Something went wrong: $e");
+   } finally{
+    imageUploading.value = false;
+   }
   }
 }

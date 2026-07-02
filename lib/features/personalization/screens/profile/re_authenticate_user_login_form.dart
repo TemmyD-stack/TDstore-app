@@ -13,7 +13,7 @@ class ReAuthLoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = UserController.instance;
+    final controller = Get.put(UserController());
     return Scaffold(
       appBar: TAppBar(
         showBackArrow: true,
@@ -32,8 +32,7 @@ class ReAuthLoginForm extends StatelessWidget {
           // ),
           // const SizedBox(height: TSizes.spaceBtwSections,),
 
-          // ///text field and button
-          
+          ///text field and button
           Form(
            key: controller.reAuthFormKey,
             child: Column(

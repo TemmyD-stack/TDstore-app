@@ -45,15 +45,7 @@ Map<String, dynamic> toJson() {
   };
 }
 
-//factory method to create a UserModel from a firebase document snapshot.
-// factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
-//   if (document.data() != null) {
-//     final data = document.data()!;
-//     return UserModel(id: document.id, username: data['Username'] ?? '', email: data['Email'] ?? '', firstName: data['FirstName'] ?? '', lastName: data['LastName'] ?? '', phoneNumber: data['PhoneNumber'] ?? '', profilePicture: data['ProfilePicture'] ?? '');
-//   }
-// }
-
-
+//factory method to create a UserModel from a firebase document snapshot
 factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
   final data = document.data();
   if (data == null) {
@@ -64,7 +56,7 @@ factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) 
     username: data['Username'] ?? '',
     email: data['Email'] ?? '',
     firstName: data['FirstName'] ?? '',
-    lastName: data['LastName'] ?? '',
+    lastName: data['LasttName'] ?? '',
     phoneNumber: data['PhoneNumber'] ?? '',
     profilePicture: data['ProfilePicture'] ?? '',
   );

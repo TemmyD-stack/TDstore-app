@@ -3,14 +3,15 @@ import 'package:t_store/common/widgets/layouts/grid_layout.dart';
 import 'package:t_store/common/widgets/products_cart_brands/brands/brand_showcase.dart';
 import 'package:t_store/common/widgets/products_cart_brands/product_cards/product_card_vertical.dart';
 import 'package:t_store/common/widgets/texts/section_heading.dart';
+import 'package:t_store/features/shop/models/category_model.dart';
 import 'package:t_store/utils/constants/image_strings.dart';
 import 'package:t_store/utils/constants/sizes.dart';
 
 class TCategoryWidget extends StatelessWidget {
   const TCategoryWidget({
-    super.key,
+    super.key, required this.category
   });
-
+ final CategoryModel category;
   @override
   Widget build(BuildContext context) {
     return ListView(

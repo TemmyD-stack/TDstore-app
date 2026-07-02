@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_store/common/widgets/images/circular_image.dart';
+import 'package:t_store/features/personalization/controllers/user_controller.dart';
 import 'package:t_store/utils/constants/colors.dart';
 import 'package:t_store/utils/constants/image_strings.dart';
 
@@ -13,19 +15,24 @@ class TUserProfileTile extends StatelessWidget {
   final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
+     final controller = Get.put(UserController());
     return ListTile(
-      leading: TCircularImage(
-        image: TImages.user, 
-        width: 50, 
-        height: 50,
-        padding: 0,
-        
+      leading: Obx(
+        () { 
+          final networkImage = controller.user.value.profilePicture;
+          final image = networkImage.isNotEmpty ? networkImage : TImages.user;
+          return TCircularImage(
+            image: image, 
+            width: 50, 
+            height: 50,
+            padding: 0,
+            isNetworkImage: networkImage.isNotEmpty,
+          );
+        }
       ),
-      title: Text("TemmyD-stack", style:Theme.of(context).textTheme.headlineSmall!.apply(color: TColors.white)),
-      subtitle: Text("temi.dire.dayo.1@gmail.com", style:Theme.of(context).textTheme.labelMedium!.apply(color: TColors.white)),
+      title: Obx(()=> Text(controller.user.value.fullName, style:Theme.of(context).textTheme.headlineSmall!.apply(color: TColors.white))),
+      subtitle: Obx(()=> Text(controller.user.value.email, style:Theme.of(context).textTheme.labelMedium!.apply(color: TColors.white))),
       trailing: IconButton(onPressed: onPressed, icon: const Icon(Iconsax.edit, color: TColors.white,)),
-      
-    
     );
   }
 }
